@@ -153,27 +153,11 @@ aminoacidos = {
 }
 
 nucl_codon = [];
-frames = [];
-proteins = [];
 
-dna  = "ATGTACTCATTCGTTTCGGAAGAGACAGGTACGTAA"  
-dna += "ATGGTTAATAGCGTACTTCTTTTTCTTGCTTTCGTG"  
-dna += "GTATTCTTGCTAGTTACACTAGCCATCCTTACTTAG"  
-dna += "CTTCGATTGTGTGCGTACTGCTGCAATATTGTTAAC" 
-dna += "ATGAGTCTTGTAAAACCTTCTTTTTACGTTTACTCT"  
-dna += "TGAGTTAAAAATCTGAATTCTTCTAGAGTTCCTGAT"  
-dna += "ATGCTGGTCTGA"
-
-#dna = ""
+#dna = "ACCGTT"
+dna = "ATGTACTCATTCGTTTCGGAAGAGACAGGTACGTTAATAGTTAATAGCGTACTTCTTTTTCTTGCTTTCGTGGTATTCTTGCTAGTTACACTAGCCATCCTTACTGCGCTTCGATTGTGTGCGTACTGCTGCAATATTGTTAACGTGAGTCTTGTAAAACCTTCTTTTTACGTTTACTCTCGTGTTAAAAATCTGAATTCTTCTAGAGTTCCTGATCTTCTGGTCTAA"
 dna_complement = ""
 rna = ""
-
-#f = open("ng_005816.txt", "r")
-#f = open("covid19.txt", "r")
-#for x in f:
-#  dna = dna + x
-#dna = dna.replace("\n","")
-
 
 # complementary seq 
 #
@@ -187,8 +171,9 @@ print " dna length  = ", n
 n = len(dna_complement)
 print " dna length complementary  = ", n
 
-#for i in range(0, n):
-#  print i, dna[i], dna_complement[i]
+
+for i in range(0, n):
+  print i, dna[i], dna_complement[i]
 
 print "dna molde : "
 print dna
@@ -205,58 +190,22 @@ for x in dna:
 
 print "rna "
 
-#rna = rna[::-1]
+# rna = rna[::-1]
+
 print rna
 
 #
 # codon create
 #
 n = len(rna)
-
-codon = ""
-myframe = ""
-frame_start = 0
-
-print "frames : "
 for i in range(0, n, 3):
-  codon = rna[i:i+3]
-  nucl_codon.append(codon)
-  if codon == "AUG":
-    frame_start = 1
-    myframe = "AUG"
-  else:
-    if (frame_start == 1):
-      if (codon == "UAA") or (codon=="UAG") or (codon=="UGA"):
-        frame_start = 0
-        frames.append(myframe)
-        myframe = ""
-      else:
-        myframe = myframe + codon
-      
+  nucl_codon.append(rna[i:i+3])
 
-n = len(frames)
-
-#
-# protein
-#
-
-myprotein = ""
+n = len(nucl_codon)
+print "total codons ", n
+proteina = ""
 for i in range(0,n):
-  y = len(frames[i])
-  myprotein = ""
-  myframe = frames[i]
+  print i, nucl_codon[i], aminoacidos[nucl_codon[i]]
+  proteina = proteina + aminoacidos[nucl_codon[i]]
 
-  for j in range(0, y, 3):
-    codon = myframe[j:j+3]
-    myprotein += aminoacidos[codon]
-  proteins.append(myprotein)
-
-
-#
-# frames, protein, legth
-#
-
-for i in range(0,n):
-  print i+1, frames[i], len(frames[i])
-  print proteins[i], len(proteins[i])
-  print ""
+print proteina
